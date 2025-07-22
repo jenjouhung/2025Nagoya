@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>名古屋夏日冒險之旅 2025</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-size: 14pt;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: #4a5568;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header .dates {
+      font-size: 1.2em;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .info-card h3 {
+      color: #4a5568;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 5px;
+    }
+
+    .day-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+
+    .day-header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 20px 30px;
+      font-size: 1.5em;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .day-header:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    }
+
+    .day-content {
+      padding: 30px;
+      display: none;
+    }
+
+    .day-content.active {
+      display: block;
+    }
+
+    .activity {
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .activity:hover {
+      background: #f0f4ff;
+      transform: translateX(5px);
+    }
+
+    .activity h4 {
+      color: #4a5568;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+
+    .activity-details {
+      color: #718096;
+      line-height: 1.6;
+    }
+
+    .flight-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .flight-card {
+      background: #e6f3ff;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #bee3f8;
+    }
+
+    .accommodation {
+      background: #f0fff4;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #9ae6b4;
+    }
+
+    .metro-route {
+      background: #fff5f5;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      border-left: 4px solid #f56565;
+      font-family: monospace;
+    }
+
+    .restaurant {
+      background: #fffaf0;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      border-left: 3px solid #ed8936;
+    }
+
+    .shopping {
+      background: #f0f8ff;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      border-left: 3px solid #4299e1;
+    }
+
+    .toggle-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2em;
+    }
+
+    .toggle-icon.rotated {
+      transform: rotate(180deg);
+    }
+
+    .participants {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+    }
+
+    .participant {
+      background: #f7fafc;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .shopping-list {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .shopping-list h3 {
+      color: #4a5568;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #48bb78;
+      padding-bottom: 5px;
+    }
+
+    .shopping-item {
+      background: #f0fff4;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+      border-left: 4px solid #48bb78;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .header h1 {
+        font-size: 2em;
+      }
+
+      .day-header {
+        padding: 15px 20px;
+        font-size: 1.3em;
+      }
+
+      .day-content {
+        padding: 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .highlight {
+      background: linear-gradient(45deg, #ffd89b, #19547b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    .time-badge {
+      background: #667eea;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 500;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="pics/01.Cover.png" alt="名古屋夏日冒險之旅" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+      <h1>🏯 名古屋夏日冒險之旅</h1>
+      <div class="dates">2025.07.29 ~ 08.01</div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>👥 參與人員</h3>
+        <div class="participants">
+          <div class="participant">
+            <strong>胡筱嵐 (HU, HSIAO-LAN)</strong><br>
+            護照號：361756182<br>
+            護照到期：2033.03.03<br>
+            生日：1981.02.09
+          </div>
+          <div class="participant">
+            <strong>池秋霞 (CHIH, CHIU-HSIA)</strong><br>
+            護照號：352252510<br>
+            護照到期：2029.05.17<br>
+            生日：1955.10.20
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>✈️ 航班資訊</h3>
+        <div class="flight-info">
+          <div class="flight-card">
+            <strong>去程 07/29 (二) <span style="color: #e53e3e;">11:35 → 15:30</span></strong><br>
+            <ul style="margin-left:15px">
+              <li>桃園機場第1航廈 (國泰 CX530)</li>
+            </ul>
+          </div>
+          <div class="flight-card">
+            <strong>回程 08/01 (五) <span style="color: #e53e3e;">11:35 → 15:30</span></strong><br>
+            <ul style="margin-left:15px">
+              <li>名古屋機場第1航廈 (國泰 CX531)</li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>🏨 住宿資訊</h3>
+        <div class="accommodation">
+
+          <img src="pics/02.Hotel.jpg" alt="三井花園飯店名古屋普米爾"
+            style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+          <strong>三井花園飯店名古屋普米爾</strong><br>
+          (三井ガーデンホテル名古屋プレミア)<br>
+
+          📍 4 Chome-11-27 Meieki, Nakamura Ward, Nagoya
+          <a href="https://maps.app.goo.gl/YfxeDxDp9LMKQHWA8" target="_blank" title="在 Google 地圖上查看">
+            <img src="pics/03.map.png" alt="Google Map" style="width:18px;height:18px;vertical-align:middle;">
+          </a>
+          <br>
+          📞 +81525871131<br>
+          📅 07/29 ~ 08/01 (4晚)
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header" onclick="toggleDay(1)">
+        <span>Day 1: 07月29日 - 抵達名古屋</span>
+        <span class="toggle-icon" id="icon1">▼</span>
+      </div>
+      <div class="day-content" id="day1">
+        <div class="activity">
+          <h4>一、台北出發 🛫</h4>
+          <div class="activity-details">
+            <span class="time-badge">08:35</span>振洲送機，從板橋住所出發<br>
+            <span class="time-badge">11:35</span>桃園機場第1航廈起飛
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>二、抵達名古屋機場 🛬</h4>
+          <div class="activity-details">
+            <span class="time-badge">15:30</span>抵達名古屋機場2F入境大廳<br>
+            <ul style="margin-left:15px">
+              <li>啟用 <a
+                  href="https://docs.google.com/document/d/142l3V_CIB7YyAoRXAIUITB3vzsOkt5BBq74guxu-X2s/edit?usp=sharing">e-sim</a>
+              </li>
+              <li>前往2F名鐵線車站購票</li>
+              <li><span style="color: #e53e3e;"><strong>建議購買 μSKY列車(日文:ミュースカイ)</strong></span>- 指定座位，價格1,430日圓</li>
+            </ul>
+            <div class="metro-route">
+              μSKY 會有兩張票= 980日圓基本票 + 450日圓特別車票
+            </div>
+            <div class="activity-details">
+              車站購票購買參考:<br>
+              <a href="https://bobbyworld.tw/ngo-to-downtown/" target="_blank"> μSKY 交通攻略 (2025)</a>、
+              <a href="https://gototravel.tw/take-meitetsu-train-go-to-nagoya/" target="_blank">購票機操作</a><br>
+              <img src="pics/04.uticket.jpg" alt="購買車票" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+              •搭車前請參照資訊看板，確定月台 與 月台方向 <br>
+              <img src="pics/05.Paltform.jpg" alt="購買車票" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🚊 前往住宿</h4>
+          <div class="activity-details">
+            • 名鐵名古屋車站出站<br>
+            • 前往<strong>「JR名古屋駅 櫻通口」方向</strong><br>
+            • 使用<a href="https://maps.app.goo.gl/YfxeDxDp9LMKQHWA8">Google MAP導航至飯店 <img src="pics/03.map.png"
+                alt="Google Map" style="width:18px;height:18px;vertical-align:middle;"></a><br>
+            • 路線影片：<a href="https://www.gardenhotels.co.jp/nagoya-premier/mov/route-2.mp4">路面路線</a>、<a
+              href="https://www.gardenhotels.co.jp/nagoya-premier/mov/route-1.mp4">地下路線</a>
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🍽️ 晚餐 - <a href="https://archerplus.pixnet.net/blog/post/151019944">太閤通口ESCA 地下街 <img
+                src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;"></a></h4>
+          <div class="activity-details">
+            <strong>抵達方式：</strong>
+            • 進入，回到JR 名古屋 (<strong style="color: #e53e3e;"><a href="https://maps.app.goo.gl/oXrdop8BBexENLHj7">金時鐘 <img
+                  src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;" /></a></strong>)
+            ，穿過中央大廳到<strong style="color: #e53e3e;"><a href="https://maps.app.goo.gl/AQA2QQfJW9ADswZT8">銀時鐘 <img
+                  src="pics/03.map.png" alt="Google Map"
+                  style="width:17px;height:17px;" /></a></strong>，出站，立刻右轉。可遇到ESCA主入口。<br>
+            <img src="pics/06clocks.jpg" alt="JR站內路線" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+            • ESCA 入口<br>
+            <img src="pics/07.ESCA_in.jpg" alt="ESCA 入口" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+            • ESCA 地圖<br>
+            <img src="pics/08.ESCA_MAP.jpg" alt="ESCA MAP"
+              style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+            <strong>推薦餐廳：</strong>
+            <div class="restaurant">🐷 味噌豬排矢場町（編號38）</div>
+            <div class="restaurant">🐟 ひつまぶし名古屋備長（編號42）- 鰻魚飯</div>
+            <div class="restaurant">🍜 味噌烏龍麵山本屋本店（編號21）</div>
+            <div class="restaurant">🍤 碁子麵よしだ（編號20）- 天婦羅烏龍麵</div>
+            <div class="restaurant">🍗 元祖炸雞翅風來坊（編號40）</div>
+            <div class="restaurant">🍗 鳥開總本家（編號37）- 親子丼</div>
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🛒 購物</h4>
+          <div class="activity-details">
+            <div class="shopping">🏪 藥局<a href="https://maps.app.goo.gl/PdcNav1SEEhnW6TLA"> 千里馬(順路先到)(開到 22:00) <img
+                  src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;" /></a></div>
+            <div class="shopping">🏪 大超商<a href="https://maps.app.goo.gl/PdcNav1SEEhnW6TLA"> MaxValu太閤店 (24小時) <img
+                  src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;" /></a></div>
+            <div class="shopping">🏪 藥妝<a href="https://maps.app.goo.gl/PdcNav1SEEhnW6TLA"> Welcia Nagoya Taiko (開到
+                23:00) <img src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header" onclick="toggleDay(2)">
+        <span>Day 2: 07月30日 - 熱田神宮 & 大須商店街</span>
+        <span class="toggle-icon" id="icon2">▼</span>
+      </div>
+      <div class="day-content" id="day2">
+        <div class="activity">
+          <h4>☕ 早餐</h4>
+          <div class="activity-details">
+            <span class="highlight">Komeda Coffee - 飯店旁邊 <a
+                href="https://maps.app.goo.gl/RzJLNejPPMGoTNHc6?g_st=ic"><img src="pics/03.map.png" alt="Google Map"
+                  style="width:18px;height:18px;vertical-align:middle;"></a><br></span>
+          </div>
+        </div>
+        <div class="activity">
+          • 名古屋JR車站與地鐵站<br>
+          <img src="pics/09.trains.jpg" alt="ESCA 入口" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+          • 本日地鐵路線<br>
+          <img src="pics/10.day2route.jpg" alt="ESCA 入口" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
+        </div>
+
+        <div class="activity">
+          <h4>⛩️ 熱田神宮</h4>
+          <div class="activity-details">
+            <strong>地鐵路線：</strong>
+            <div class="metro-route">
+              • 地下鐵名古屋站(東山線:H08) → 榮(東山線:H10) 換車 <br>
+              • 榮 (名城線 左環（左回り），M05) → <a href="https://maps.app.goo.gl/SNJU2HhDRcCaBGdJ7">熱田神宮西(名城線:M27)</a>
+            </div>
+            <div class="restaurant">🍜 午餐： <a href="https://maps.app.goo.gl/K2TEhGxagSoeSNom7"> 宮寬烏龍麵 神宮店 <img
+                  src="pics/03.map.png" alt="Google Map" style="width:17px;height:17px;" /></a></div>
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🏮 大須觀音 & 大須商店街</h4>
+          <div class="activity-details">
+            <strong>地鐵路線：</strong>
+            <a class="metro-route">
+              • <a href="https://maps.app.goo.gl/SNJU2HhDRcCaBGdJ7">熱田神宮西</a>(名城線：M27 右環（右回り) → 上前津(M03) 換車 <br>
+              • 上前津(舞鶴線:T09) → <a href="https://maps.app.goo.gl/bTKsC4hnQ5qwk9tj9">大須觀音(舞鶴線:T08)</a>
+
+          </div>
+          • <a href="https://maps.app.goo.gl/caL7yJ5sX4KuEQpv5"> 參拜大須觀音 <img src="pics/03.map.png" alt="Google Map"
+              style="width:17px;height:17px;" /></a><br>
+          • <a href="https://maps.app.goo.gl/pDkSusCuCp1cLdUY7"> 逛大須商店街 <img src="pics/03.map.png" alt="Google Map"
+              style="width:17px;height:17px;" /></a><br>
+          • <a href="https://bobbyworld.tw/osu/">大須商店街必買攻略</a><br>
+        </div>
+
+
+        <div class="activity">
+          <h4>🌃 榮町商店街 & 下午茶</h4>
+          <div class="activity-details">
+            <strong>地鐵路線：</strong>
+            <div class="metro-route">
+              • 步行至 <a href="https://maps.app.goo.gl/HpNTM4nw1y387yaH8">矢場町駅(M4)</a> 或 <a
+                href="https://maps.app.goo.gl/6cb1ssrtjKULHZ1E7">上前津(名城線 M3)</a> → <a
+                href="https://maps.app.goo.gl/bRLpxDv63kboUFXK9">榮(M05)</a>
+            </div>
+            • <a href="https://centrip-japan.com/tch/article/1021.html">榮町商店街必買攻略</a>
+            <div class="restaurant">🍰 甜點：<a href="https://maps.app.goo.gl/KmnYEvNUBE9Fjptm9">HARBS 榮本店 <a
+                  href="https://maps.app.goo.gl/pDkSusCuCp1cLdUY7"> <img src="pics/03.map.png" alt="Google Map"
+                    style="width:17px;height:17px;" /></a></div>
+            <div class="shopping">📸 拍照：<a href="https://maps.app.goo.gl/3iUYt2PNgDPTbR1e7">中部電力塔 <a
+                  href="https://maps.app.goo.gl/pDkSusCuCp1cLdUY7"> <img src="pics/03.map.png" alt="Google Map"
+                    style="width:17px;height:17px;" /></a></div>
+            <div class="shopping">🌿 逛逛：<a href="https://maps.app.goo.gl/3z9LDCbPJBaKTn7K8">綠洲21展望平台 <a
+                  href="https://maps.app.goo.gl/pDkSusCuCp1cLdUY7"> <img src="pics/03.map.png" alt="Google Map"
+                    style="width:17px;height:17px;" /></a></div>
+            <div class="shopping">🛍️ 購物：<a href="https://maps.app.goo.gl/5W4t8Co4RGdPuE1x9">唐吉柯德 榮町店 <a
+                  href="https://maps.app.goo.gl/pDkSusCuCp1cLdUY7"> <img src="pics/03.map.png" alt="Google Map"
+                    style="width:17px;height:17px;" /></a></div>
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🍽️ 晚餐建議</h4>
+          <div class="activity-details">
+            回到名古屋車站用餐：
+            <div class="restaurant">🐷 <a href="https://maps.app.goo.gl/AAAF3cAaNZjsWyJb6">矢場丼 名古屋站名鐵店
+                (味噌豬排)(名鐵百貨9F)</a>
+            </div>
+          </div>
+          <div class="restaurant">🍜 <a href="https://maps.app.goo.gl/Umn82C5oaRq29q9CA">山本屋總本家 名鐵店 (味噌烏龍麵) (名鐵百貨9F)</a>
+          </div>
+          <div class="restaurant">🐟 <a href="https://maps.app.goo.gl/QUPUfMm62kqT3qLQA">MARUYA本店 - 鰻魚飯(名鐵百貨9F)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header" onclick="toggleDay(3)">
+        <span>Day 3: 07月31日 - 犬山町一日遊</span>
+        <span class="toggle-icon" id="icon3">▼</span>
+      </div>
+      <div class="day-content" id="day3">
+        <div class="activity">
+          <h4>🎟️ 購買犬山町套票</h4>
+          <div class="activity-details">
+            • 在JR名古屋站有人窗口購買<br>
+            • <strong>犬山城下町きっぷ</strong><br>
+            • <span class="highlight">成人票價：1,630日圓</span>
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🎫 套票內容</h4>
+          <div class="activity-details">
+            ✅ 名鐵電車來回車票<br>
+            ✅ 犬山城入場券<br>
+            ✅ 有樂苑入場折價券 (1280→840日圓)<br>
+            ✅ 犬山優惠券 (可使用3次)
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🚊 搭車方式</h4>
+          <div class="activity-details">
+            • 使用套票進入JR名古屋車站<br>
+            • 尋找往犬山的月台 (通常是第1月台)<br>
+            • 搭往「新鵜沼」或「犬山」的班車<br>
+            • <strong>注意：</strong>不要搭u-sky或快速特急 (需加價450日圓)
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🏯 犬山町觀光</h4>
+          <div class="activity-details">
+            • 犬山城參觀<br>
+            • 犬山城下町散步<br>
+            • 有樂苑參觀<br>
+            • 使用優惠券享受當地美食
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>🛒 傍晚採買</h4>
+          <div class="activity-details">
+            <div class="shopping">🏪 AEON MaxValu太閣店 (24hr, 距離旅館900m)</div>
+            <div class="shopping">💊 千里馬藥局</div>
+            <div class="shopping">📱 Bic Camera (ESCA方向)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-section">
+      <div class="day-header" onclick="toggleDay(4)">
+        <span>Day 4: 08月01日 - 回程</span>
+        <span class="toggle-icon" id="icon4">▼</span>
+      </div>
+      <div class="day-content" id="day4">
+        <div class="activity">
+          <h4>🏨 飯店準備</h4>
+          <div class="activity-details">
+            <span class="time-badge">09:00</span>飯店早餐與打包<br>
+            <span class="time-badge">11:00</span>Check-out
+          </div>
+        </div>
+
+        <div class="activity">
+          <h4>✈️ 機場流程</h4>
+          <div class="activity-details">
+            <span class="time-badge">12:00</span>抵達名古屋機場/採買/午餐<br>
+            <span class="time-badge">14:30</span>Check-in<br>
+            <span class="time-badge">15:50</span>到登機口<br>
+            <span class="time-badge">16:35</span>飛機起飛
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shopping-list">
+      <h3>🛍️ 購物清單</h3>
+      <div class="shopping-item">
+        <strong>MEISHOKU 明色</strong> - Moist Labo 礦物BB散粉5.5g SPF50
+      </div>
+      <div class="shopping-item">
+        <strong>防蚊液</strong> - おすだけベープ
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDay(dayNumber) {
+      const content = document.getElementById(`day${dayNumber}`);
+      const icon = document.getElementById(`icon${dayNumber}`);
+
+      if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        icon.classList.remove('rotated');
+      } else {
+        // Close all other days
+        document.querySelectorAll('.day-content').forEach(day => {
+          day.classList.remove('active');
+        });
+        document.querySelectorAll('.toggle-icon').forEach(icon => {
+          icon.classList.remove('rotated');
+        });
+
+        // Open current day
+        content.classList.add('active');
+        icon.classList.add('rotated');
+      }
+    }
+
+    // Open Day 1 by default
+    document.addEventListener('DOMContentLoaded', function () {
+      toggleDay(1);
+    });
+  </script>
+</body>
+
+</html>
